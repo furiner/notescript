@@ -1,6 +1,15 @@
-if (!_) const _ = $; 
+var _ = $;
+var playables = [];
+var notes = {};
+
+// setup notes
+for (let i = 0; i <= 9; i++) {
+    notes[i] = 24 * i;
+}
 
 const NoteScript = {
+    playNote: playNote,
+    
     playNotes: () => {
         if (playables.length == 0) return;
 
@@ -26,7 +35,7 @@ const NoteScript = {
         });
 
         return notes;
-    }
+    },
 
     scriptParse: (script) => {
         let notes = [];
@@ -41,13 +50,30 @@ const NoteScript = {
 
         return notes;
     },
-    notes: {
-        A: 6,
-        B: 7,
-        C: 1,
-        D: 2,
-        E: 0,
-        F: 4,
-        G: 5
+    
+    notes: notes,
+    
+    load: (note) => {
+        // pre-load notes in video
+        if (note > 9) return;
+        if (!note) {
+            note = 0;
+            playNote(note, 500);
+        } else playNote(note, 500);
+        load(note + 1, 500);
+        
+        return true;
     }
 };
+
+function playNote(note, length) {
+        _("video").currentTime = notes[not];
+        _("video").play();
+        setTimeout(() => {
+            _("video").pause();
+            if (playables.length > 0) {
+                // play the next note
+                playNotes();
+            }
+        }, length);
+    }
